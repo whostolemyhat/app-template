@@ -48,9 +48,7 @@ module.exports = function(grunt) {
                     lineNumbers: true
                 },
                 files: {
-                    '<%= app %>/css/main.css': '<%= app %>/sass/main.scss',
-                    '<%= app %>/css/ie.css': '<%= app %>/sass/ie.scss',
-                    '<%= app %>/css/print.css': '<%= app %>/sass/print.scss'
+                    '<%= app %>/css/main.css': '<%= app %>/sass/main.scss'
                 }
             },
             prod: {
@@ -59,9 +57,7 @@ module.exports = function(grunt) {
                     lineNumbers: false
                 },
                 files: {
-                    '<%= app %>/build/css/main.css': '<%= app %>/sass/main.scss',
-                    '<%= app %>/build/css/ie.css': '<%= app %>/sass/ie.scss',
-                    '<%= app %>/build/css/print.css': '<%= app %>/sass/print.scss'
+                    '<%= app %>/build/css/main.css': '<%= app %>/sass/main.scss'
                 }
             }
         },
@@ -96,20 +92,6 @@ module.exports = function(grunt) {
             ]
         },
 
-        csslint: {
-            strict: {
-                options: {
-                    import: 2
-                },
-                src: ['<%= app %>/css/*.css']
-            },
-            lax: {
-                options: {
-                    import: false
-                },
-                src: ['<%= app %>/css/*.css']
-            }
-        },
 
         connect: {
             options: {
@@ -127,6 +109,5 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', ['connect:livereload', 'watch']);
-    grunt.registerTask('lint', ['jshint', 'csslint:lax']);
     grunt.registerTask('build', ['jshint', 'clean', 'uglify', 'sass:prod']);
 };

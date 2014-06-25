@@ -10,7 +10,7 @@ button,
 input, 
 select, 
 textarea {
-    @include px('font-size', ($baseFontSize * 1px)); 
+    font-size: $baseFontSize * 1px; 
     font-family: $baseFontFamily;
 }
 
