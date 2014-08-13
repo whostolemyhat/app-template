@@ -83,6 +83,7 @@ module.exports = function(grunt) {
 
         jshint: {
             options: {
+                force: true,
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-summary')
             },
