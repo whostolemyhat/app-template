@@ -40,6 +40,27 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        
+        concat: {
+            dev: {
+                options: {
+                    // Replace all 'use strict' statements in the code with a single one at the top
+                    // and replace all namespace declarations
+                    banner: "<%= tag.banner %>\n'use strict';\nvar jt = jt || {};\n\n",
+                    process: function(src, filepath) {
+                        return '// Source: ' + filepath + '\n' +
+                            src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1')
+                                .replace(/(var jt = jt \|\| {};)/g, '');
+                    },
+                },
+                files: {
+                    '<%= app %>/js/main.js': [
+                        '<%= app %>/js/src/_search.js',
+                        '<%= app %>/js/src/_main.js' // main always last
+                    ]
+                },
+            }
+        },
 
         sass: {
             dev: {
@@ -65,10 +86,11 @@ module.exports = function(grunt) {
         clean: [ '<%= app %>/build/' ],
 
         tag: {
-            banner: '/* <%= pkg.name %>\n*/' +
-                    '/* v<%= pkg.version %>\n*/' +
-                    '/* <%= pkg.author %>\n*/' +
-                    '/* Last updated: <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+            banner: '/* <%= pkg.name %>*/\n' +
+                    '/* v<%= pkg.version %>*/\n' +
+                    '/* <%= pkg.author %>*/\n' +
+                    '/* Last updated: <%= grunt.template.today("dd-mm-yyyy") %> */\n' +
+                    '/* This is a generated file: any changes made here will be lost. */\n'
         },
 
         uglify: {
@@ -109,6 +131,6 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.registerTask('default', ['connect:livereload', 'watch']);
+    grunt.registerTask('default', ['sass:dev', 'concat:dev', 'connect:livereload', 'watch']);
     grunt.registerTask('build', ['jshint', 'clean', 'uglify', 'sass:prod']);
 };
