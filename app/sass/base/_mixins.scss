@@ -185,3 +185,11 @@
     #{$property}: $rem-values;
 }
 
+/* Retina =========================================================== */
+// wrapper for retina media query
+// usage: @include retina { background-image: url(sprite@2x.png); }
+@mixin retina {
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+      @content;
+  }
+}
